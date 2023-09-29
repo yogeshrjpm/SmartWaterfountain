@@ -1,0 +1,37 @@
+import RPi.GPIO as GPIO
+import time
+
+# GPIO pin for controlling the solenoid valve
+VALVE_PIN = 17
+
+# Initialize GPIO settings
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(VALVE_PIN, GPIO.OUT)
+
+def open_valve():
+    GPIO.output(VALVE_PIN, GPIO.HIGH)
+    print("Valve opened")
+
+def close_valve():
+    GPIO.output(VALVE_PIN, GPIO.LOW)
+    print("Valve closed")
+
+try:
+    while True:
+        # Replace this with your sensor data retrieval logic
+        # For example, you might check a water level sensor
+        water_level = get_water_level()
+
+        if water_level < 10:
+            open_valve()
+        else:
+            close_valve()
+
+        # Adjust the sleep duration based on your requirements
+        time.sleep(5)
+
+except KeyboardInterrupt:
+    print("Exiting...")
+finally:
+    # Cleanup GPIO settings on exit
+    GPIO.cleanup()
